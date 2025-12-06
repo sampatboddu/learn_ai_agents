@@ -1,0 +1,555 @@
+{
+    "summary_metrics": {
+        "row_count": 15,
+        "factual_accuracy_metric/mean": 4.066666666666666,
+        "factual_accuracy_metric/std": 1.667618775665584,
+        "completeness_metric/mean": 3.933333333333333,
+        "completeness_metric/std": 1.6676187756655838,
+        "trajectory_single_tool_use/mean": 1.0,
+        "trajectory_single_tool_use/std": 0.0,
+        "latency_in_seconds/mean": 8.667851711732753,
+        "latency_in_seconds/std": 3.989597667848204,
+        "failure/mean": 0.0,
+        "failure/std": 0.0
+    },
+    "pointwise_metrics": [
+        {
+            "prompt": "What tables are available in the dataset `ecommerce`?",
+            "reference": "The tables available in the dataset `ecommerce` are: `distribution_centers`, `events`, `inventory_items`, `order_items`, `orders`, `products`, and `users`.",
+            "response": "The tables available in the `ecommerce` dataset are: `distribution_centers`, `events`, `inventory_items`, `order_items`, `orders`, `products`, and `users`.",
+            "latency_in_seconds": 2.913534377999895,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "The AI's response perfectly matches all factual information provided in the reference, listing the exact same tables available in the `ecommerce` dataset without any inaccuracies or omissions.",
+            "factual_accuracy_metric/score": 5.0,
+            "completeness_metric/explanation": "The AI's answer is perfectly complete, including all key information requested by the prompt and present in the reference. It lists all seven tables exactly as provided in the reference.",
+            "completeness_metric/score": 5.0,
+            "trajectory_single_tool_use/score": 1.0
+        },
+        {
+            "prompt": "How many users are there in total?",
+            "reference": "There are 100,000 users in total.",
+            "response": "There are 100,000 users in total.",
+            "latency_in_seconds": 6.440317057000357,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "table_id": "users",
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "query": "SELECT COUNT(id) FROM ecommerce.users",
+                        "project_id": "sam-ai-agents"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "The AI's response is factually identical to the reference, stating the exact number of users provided in the ground truth.",
+            "factual_accuracy_metric/score": 5.0,
+            "completeness_metric/explanation": "The AI's answer is perfectly complete, including all key information requested by the prompt and present in the reference, with no omissions. It directly answers the question with the exact information provided in the reference.",
+            "completeness_metric/score": 5.0,
+            "trajectory_single_tool_use/score": 1.0
+        },
+        {
+            "prompt": "Find the email and age of the user with id 72685.",
+            "reference": "The email address of user 72685 is lindseybrennan@example.org and their age is 59.",
+            "response": "The email of the user with ID 72685 is lindseybrennan@example.org and their age is 59.",
+            "latency_in_seconds": 6.714943593997305,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "dataset_id": "ecommerce"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "table_id": "users",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "query": "SELECT email, age FROM `sam-ai-agents.ecommerce.users` WHERE id = 72685"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "The AI response perfectly matches all factual details (email address and age) provided in the reference for the specified user ID, with no inaccuracies or discrepancies.",
+            "factual_accuracy_metric/score": 5.0,
+            "completeness_metric/explanation": "The AI's response perfectly includes all key information requested by the prompt and present in the reference, specifically the email address and age of the user with the specified ID.",
+            "completeness_metric/score": 5.0,
+            "trajectory_single_tool_use/score": 1.0
+        },
+        {
+            "prompt": "How many orders have a status of Complete?",
+            "reference": "There are 31,077 orders with a status of 'complete'.",
+            "response": "I need to know which table contains the order information. Could you please list the tables in the `ecommerce` dataset so I can help you with your query?",
+            "latency_in_seconds": 2.763051010999334,
+            "failure": 0,
+            "predicted_trajectory": [],
+            "factual_accuracy_metric/explanation": "The AI did not answer the question about the number of complete orders; instead, it asked for more information, making it completely factually inaccurate in relation to the prompt's request.",
+            "factual_accuracy_metric/score": 1.0,
+            "completeness_metric/explanation": "The AI's response does not provide any of the essential information requested by the prompt. Instead, it asks for clarification, making it critically incomplete and unusable as an answer to the user's question.",
+            "completeness_metric/score": 1.0,
+            "trajectory_single_tool_use/score": NaN
+        },
+        {
+            "prompt": "Which distribution center has the highest latitude, and what is it's latitude?",
+            "reference": "Chicago IL is the distribution center with the highest latitude, with a latitude of 41.84.",
+            "response": "The distribution center with the highest latitude is Chicago IL, and its latitude is 41.8369.",
+            "latency_in_seconds": 7.609660971000267,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "dataset_id": "ecommerce"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "dataset_id": "ecommerce",
+                        "table_id": "distribution_centers"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "query": "SELECT name, latitude FROM ecommerce.distribution_centers ORDER BY latitude DESC LIMIT 1"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "The AI correctly identifies 'Chicago IL' as the distribution center with the highest latitude. The latitude provided by the AI (41.8369) is a more precise value than the one given in the reference (41.84), which appears to be a rounded version of the same number. Since the AI's response is factually correct and more precise without contradicting the core information, it is considered entirely accurate and excellent.",
+            "factual_accuracy_metric/score": 5.0,
+            "completeness_metric/explanation": "The AI's response correctly identifies the distribution center with the highest latitude (Chicago IL) but provides a slightly different latitude value (41.8369) compared to the reference (41.84). While not perfectly aligned with the reference's specific value, the answer is mostly complete, and the minor numerical discrepancy is a slight factual deviation rather than a critical omission, which does not significantly impact the core understanding or utility of the answer.",
+            "completeness_metric/score": 3.0,
+            "trajectory_single_tool_use/score": 1.0
+        },
+        {
+            "prompt": "Retrieve the order id for all orders with a status of cancelled placed on the 1st June 2023 before 6am.",
+            "reference": "The order IDs for all orders with a status of 'cancelled' placed on the 1st June 2023 before 6am are: 26622, 49223",
+            "response": "I need to know which table to query. Could you please provide the table name that contains the order information?\nAlso, I need the exact column names for `order_id`, `order_status`, and the column that stores the order date and time.",
+            "latency_in_seconds": 3.2012026440024783,
+            "failure": 0,
+            "predicted_trajectory": [],
+            "factual_accuracy_metric/explanation": "The AI's response does not provide the requested order IDs. Instead, it asks for more information, indicating it did not fulfill the prompt's request. Therefore, it contains no factual information to compare to the reference, rendering it entirely unhelpful and inaccurate in answering the prompt.",
+            "factual_accuracy_metric/score": 1.0,
+            "completeness_metric/explanation": "The AI's response is critically incomplete as it does not provide any of the requested order IDs. Instead, it asks for more information to perform the query, which means it failed to answer the prompt directly.",
+            "completeness_metric/score": 1.0,
+            "trajectory_single_tool_use/score": NaN
+        },
+        {
+            "prompt": "What id the full name and user ids of the top 5 users with the most orders.",
+            "reference": "The top 5 users with the most orders are: Kristine Pennington (user ID 77359), Anthony Bright (user ID 4137), David Bean (user ID 30740), Michelle Wright (user ID 54563), and Matthew Reynolds (user ID 41136), each with 4 total orders.",
+            "response": "The top 5 users with the most orders are:\n\n*   **Kristine Pennington** (User ID: 77359) with 4 orders\n*   **Anthony Bright** (User ID: 4137) with 4 orders\n*   **David Bean** (User ID: 30740) with 4 orders\n*   **Michelle Wright** (User ID: 54563) with 4 orders\n*   **Matthew Reynolds** (User ID: 41136) with 4 orders",
+            "latency_in_seconds": 8.750364057999832,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "table_id": "users",
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "query": "SELECT t1.first_name, t1.last_name, t1.id AS user_id, COUNT(t2.order_id) AS total_orders FROM ecommerce.users AS t1 JOIN ecommerce.orders AS t2 ON t1.id = t2.user_id GROUP BY t1.first_name, t1.last_name, t1.id ORDER BY total_orders DESC LIMIT 5"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "All factual information in the AI's response, including full names, user IDs, and the number of orders for each user, is identical to the reference. There are no inaccuracies or misleading details.",
+            "factual_accuracy_metric/score": 5.0,
+            "completeness_metric/explanation": "The AI's response perfectly includes all key information requested by the prompt and present in the reference, providing the full name, user ID, and the number of orders for each of the top 5 users.",
+            "completeness_metric/score": 5.0,
+            "trajectory_single_tool_use/score": 1.0
+        },
+        {
+            "prompt": "Which distribution center is associated with the highest average retail price of its products, and what is the average retail price?",
+            "reference": "The distribution center associated with the highest average retail price of its products is Houston TX, with an average retail price of $69.74.",
+            "response": "The distribution center associated with the highest average retail price of its products is **Houston TX**, with an average retail price of **69.74**.",
+            "latency_in_seconds": 11.747724237997318,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "dataset_id": "ecommerce",
+                        "table_id": "products"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "query": "SELECT distribution_center_id, AVG(retail_price) AS average_retail_price FROM ecommerce.products GROUP BY distribution_center_id ORDER BY average_retail_price DESC LIMIT 1"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "table_id": "distribution_centers",
+                        "dataset_id": "ecommerce"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "query": "SELECT dc.name AS distribution_center_name, AVG(p.retail_price) AS average_retail_price FROM ecommerce.products AS p JOIN ecommerce.distribution_centers AS dc ON p.distribution_center_id = dc.id GROUP BY dc.name ORDER BY average_retail_price DESC LIMIT 1",
+                        "project_id": "sam-ai-agents"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "The AI's response is entirely factually correct. All factual information, including the distribution center name and the average retail price, precisely matches the reference. The omission of the dollar sign does not constitute a factual inaccuracy as the numerical value is correct.",
+            "factual_accuracy_metric/score": 5.0,
+            "completeness_metric/explanation": "The AI's answer perfectly provides all the key information requested by the prompt and present in the reference, including the distribution center name and the average retail price. There are no omissions.",
+            "completeness_metric/score": 5.0,
+            "trajectory_single_tool_use/score": 1.0
+        },
+        {
+            "prompt": "How many events were of type 'purchase' in Seoul during May 2024?",
+            "reference": "In May 2024, there were 57 'purchase' events recorded in Seoul.",
+            "response": "There were 57 events of type 'purchase' in Seoul during May 2024.",
+            "latency_in_seconds": 14.540642702999321,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "table_id": "events",
+                        "dataset_id": "ecommerce"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "query": "SELECT\n  count(id)\nFROM\n  `sam-ai-agents.ecommerce.events`\nWHERE\n  event_type = 'purchase' AND city = 'Seoul' AND EXTRACT(MONTH\n  FROM\n    TIMESTAMP_SECONDS(created_at)) = 5 AND EXTRACT(YEAR\n  FROM\n    TIMESTAMP_SECONDS(created_at)) = 2024",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "query": "SELECT\n  count(id)\nFROM\n  `sam-ai-agents.ecommerce.events`\nWHERE\n  event_type = 'purchase' AND city = 'Seoul' AND EXTRACT(MONTH\n  FROM\n    TIMESTAMP_MILLIS(created_at)) = 5 AND EXTRACT(YEAR\n  FROM\n    TIMESTAMP_MILLIS(created_at)) = 2024"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "query": "SELECT\n  count(id)\nFROM\n  `sam-ai-agents.ecommerce.events`\nWHERE\n  event_type = 'purchase' AND city = 'Seoul' AND EXTRACT(MONTH\n  FROM\n    TIMESTAMP_MICROS(created_at)) = 5 AND EXTRACT(YEAR\n  FROM\n    TIMESTAMP_MICROS(created_at)) = 2024"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "The AI's response is entirely factually correct, stating the exact number (57) and all other details (event type 'purchase', location 'Seoul', date 'May 2024') precisely as provided in the reference.",
+            "factual_accuracy_metric/score": 5.0,
+            "completeness_metric/explanation": "The AI's response perfectly answers the prompt by including all key information present in the reference, specifically the number of events (57), the event type ('purchase'), the location (Seoul), and the timeframe (May 2024).",
+            "completeness_metric/score": 5.0,
+            "trajectory_single_tool_use/score": 1.0
+        },
+        {
+            "prompt": "For orders placed in June 2023, how many took three days or longer to be delivered after they were shipped?",
+            "reference": "In June 2023, there were 318 orders with a time difference of of 3 days or more between when they were shipped and delivered.",
+            "response": "For orders placed in June 2023, there were 260 orders that took three days or longer to be delivered after they were shipped.",
+            "latency_in_seconds": 14.398367796999082,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "dataset_id": "ecommerce"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "table_id": "orders",
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "query": "SELECT COUNT(order_id) FROM `sam-ai-agents.ecommerce.orders` WHERE TIMESTAMP_SECONDS(created_at) >= '2023-06-01 00:00:00 UTC' AND TIMESTAMP_SECONDS(created_at) < '2023-07-01 00:00:00 UTC' AND TIMESTAMP_DIFF(TIMESTAMP_SECONDS(delivered_at), TIMESTAMP_SECONDS(shipped_at), DAY) >= 3",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "query": "SELECT COUNT(order_id) FROM `sam-ai-agents.ecommerce.orders` WHERE TIMESTAMP_MICROS(created_at) >= '2023-06-01 00:00:00 UTC' AND TIMESTAMP_MICROS(created_at) < '2023-07-01 00:00:00 UTC' AND TIMESTAMP_DIFF(TIMESTAMP_MICROS(delivered_at), TIMESTAMP_MICROS(shipped_at), DAY) >= 3",
+                        "project_id": "sam-ai-agents"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "The AI's response provides a numerical value (260) that significantly differs from the correct value (318) stated in the reference, making it factually incorrect.",
+            "factual_accuracy_metric/score": 1.0,
+            "completeness_metric/explanation": "The AI's answer provides a number, but it is factually incorrect compared to the reference (260 vs. 318). For a question asking 'how many', the incorrect number constitutes a critical factual error and omission of the correct information, making the answer less useful.",
+            "completeness_metric/score": 1.0,
+            "trajectory_single_tool_use/score": 1.0
+        },
+        {
+            "prompt": "What are the names of the products and their respective retail price that have never been sold, but have a retail price greater than $210?",
+            "reference": "The products that have never been sold but have a retail price greater than $210 are:\n- Tommy Hilfiger Men's 2 Button Side Vent Windowpane Trim Fit Sport Coat, with a retail price of $249.9\n- MICHAEL Michael Kors Women's Hooded Leather Jacket: $211.11",
+            "response": "The products that have never been sold and have a retail price greater than $210 are:\n\n*   **Tommy Hilfiger Men's 2 Button Side Vent Windowpane Trim Fit Sport Coat** with a retail price of $249.99\n*   **MICHAEL Michael Kors Women's Hooded Leather Jacket** with a retail price of $211.11",
+            "latency_in_seconds": 10.038963712999248,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents",
+                        "table_id": "products"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "query": "\nSELECT\n    t1.name,\n    t1.retail_price\n  FROM\n    `sam-ai-agents.ecommerce.products` AS t1\n  WHERE\n    t1.retail_price > 210\n    AND t1.id NOT IN (\n      SELECT\n          t2.product_id\n        FROM\n          `sam-ai-agents.ecommerce.order_items` AS t2\n    )\n",
+                        "project_id": "sam-ai-agents"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "The AI's response is mostly accurate, correctly identifying the products and one of their prices. However, there is a minor discrepancy in the retail price of the 'Tommy Hilfiger Men's 2 Button Side Vent Windowpane Trim Fit Sport Coat', where the AI states $249.99 while the reference provides $249.9.",
+            "factual_accuracy_metric/score": 3.0,
+            "completeness_metric/explanation": "The AI's response is mostly complete, providing all requested product names and their retail prices. However, there is a slight discrepancy in one of the retail prices ($249.99 in AI vs. $249.9 in reference), which is a non-critical difference but prevents it from being perfectly complete.",
+            "completeness_metric/score": 3.0,
+            "trajectory_single_tool_use/score": 1.0
+        },
+        {
+            "prompt": "List the id and first name of users between the ages of 70 and 75 who have Facebook were sourced from Facebook and are located in California.",
+            "reference": "The users between the ages of 70 and 75 from California with 'Facebook' as their traffic source are:\n- Julie (ID: 25379)\n- Sherry (ID: 85196)\n- Kenneth (ID: 82238)\n- Lindsay (ID: 64079)\n- Matthew (ID: 99612)",
+            "response": "The following users match your criteria:\n\n*   Julie (ID: 25379)\n*   Sherry (ID: 85196)\n*   Kenneth (ID: 82238)\n*   Lindsay (ID: 64079)\n*   Matthew (ID: 99612)",
+            "latency_in_seconds": 6.969150069999159,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "dataset_id": "ecommerce"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "dataset_id": "ecommerce",
+                        "table_id": "users"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "query": "SELECT id, first_name FROM ecommerce.users WHERE age BETWEEN 70 AND 75 AND traffic_source = 'Facebook' AND state = 'California'",
+                        "project_id": "sam-ai-agents"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "The AI's response is entirely factually correct, listing all the users and their IDs precisely as provided in the reference, with no inaccuracies or missing information.",
+            "factual_accuracy_metric/score": 5.0,
+            "completeness_metric/explanation": "The AI's answer is perfectly complete, including all key information requested by the prompt and present in the reference, specifically the ID and first name for each user meeting the specified criteria.",
+            "completeness_metric/score": 5.0,
+            "trajectory_single_tool_use/score": 1.0
+        },
+        {
+            "prompt": "Identify the full name and user id of users over the age of 67 who live within 3.5 kilometers of any distribution_center.",
+            "reference": "The users over the age of 67 who live within 3.5 kilometers of any distribution center are:\n- William Campbell (user ID: 26082)\n- Becky Cantrell (user ID: 39008)",
+            "response": "The users over the age of 67 who live within 3.5 kilometers of any distribution center are:\n\n*   **Becky Cantrell** (user_id: 39008)\n*   **William Campbell** (user_id: 26082)",
+            "latency_in_seconds": 12.022268158998486,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "table_id": "users",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "table_id": "distribution_centers",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "query": "\nSELECT\n    t1.first_name,\n    t1.last_name,\n    t1.id AS user_id\n  FROM\n    `sam-ai-agents.ecommerce.users` AS t1\n  WHERE\n    t1.age > 67\n    AND EXISTS (\n    SELECT\n        1\n      FROM\n        `sam-ai-agents.ecommerce.distribution_centers` AS t2\n      WHERE\n        ST_DISTANCE(ST_GEOGPOINT(t1.longitude, t1.latitude), ST_GEOGPOINT(t2.longitude, t2.latitude)) <= 3500\n    )\n"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "query": "SELECT DISTINCT\n    t1.first_name,\n    t1.last_name,\n    t1.id AS user_id\n  FROM\n    `sam-ai-agents.ecommerce.users` AS t1\n    INNER JOIN `sam-ai-agents.ecommerce.distribution_centers` AS t2 ON ST_DISTANCE(ST_GEOGPOINT(t1.longitude, t1.latitude), ST_GEOGPOINT(t2.longitude, t2.latitude)) <= 3500\n  WHERE\n    t1.age > 67",
+                        "project_id": "sam-ai-agents"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "The AI's response accurately lists all the users and their corresponding user IDs as provided in the reference. The slight difference in wording for 'user ID' (user_id vs user ID) and the order of the list do not constitute factual inaccuracies.",
+            "factual_accuracy_metric/score": 5.0,
+            "completeness_metric/explanation": "The AI's response perfectly matches the reference, providing all requested user full names and user IDs without any omissions. The order is different but that is not an issue for completeness.",
+            "completeness_metric/score": 5.0,
+            "trajectory_single_tool_use/score": 1.0
+        },
+        {
+            "prompt": "What is the median age of users for each gender?",
+            "reference": "The median age for female users is 41, and the median age for male users is 41.",
+            "response": "The median age of users for each gender is:\n*   Female (F): 41 years old\n*   Male (M): 41 years old",
+            "latency_in_seconds": 8.526013270999101,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "table_id": "users",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "query": "SELECT\n    gender,\n    APPROX_QUANTILES(age, 100)[OFFSET(50)] AS median_age\nFROM\n    `sam-ai-agents.ecommerce.users`\nWHERE gender IS NOT NULL\nGROUP BY\n    gender\nORDER BY\n    gender;"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "The AI's response accurately states the median age for female users as 41 and male users as 41, which precisely matches the information provided in the reference. There are no factual discrepancies.",
+            "factual_accuracy_metric/score": 5.0,
+            "completeness_metric/explanation": "The AI's answer perfectly includes all key information requested by the prompt and present in the reference. It correctly states the median age for both female and male users, with no omissions.",
+            "completeness_metric/score": 5.0,
+            "trajectory_single_tool_use/score": 1.0
+        },
+        {
+            "prompt": "What is the average sale price of complete orders compared to returned orders, and what is the percentage difference (to two decimal places) between them?",
+            "reference": "The average sale price for 'Complete' orders was $59.56, while for 'Returned' orders it was $59.76. This represents a percentage difference of 0.34%.",
+            "response": "The average sale price of complete orders is 59.56, and the average sale price of returned orders is 59.76. The percentage difference between them is -0.34%, meaning the average sale price of complete orders is 0.34% lower than that of returned orders.",
+            "latency_in_seconds": 13.381572012000106,
+            "failure": 0,
+            "predicted_trajectory": [
+                {
+                    "tool_name": "list_table_ids",
+                    "tool_input": {
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "table_id": "orders",
+                        "dataset_id": "ecommerce",
+                        "project_id": "sam-ai-agents"
+                    }
+                },
+                {
+                    "tool_name": "get_table_info",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "table_id": "order_items",
+                        "dataset_id": "ecommerce"
+                    }
+                },
+                {
+                    "tool_name": "execute_sql",
+                    "tool_input": {
+                        "project_id": "sam-ai-agents",
+                        "query": "\nWITH\n  AveragePrices AS (\n    SELECT\n      AVG(CASE WHEN o.status = 'Complete' THEN oi.sale_price END) AS avg_complete_sale_price,\n      AVG(CASE WHEN o.status = 'Returned' THEN oi.sale_price END) AS avg_returned_sale_price\n    FROM\n      `sam-ai-agents.ecommerce.orders` AS o\n    JOIN\n      `sam-ai-agents.ecommerce.order_items` AS oi\n    ON\n      o.order_id = oi.order_id\n  )\nSELECT\n  avg_complete_sale_price,\n  avg_returned_sale_price,\n  ROUND(((avg_complete_sale_price - avg_returned_sale_price) / avg_returned_sale_price) * 100, 2) AS percentage_difference\nFROM\n  AveragePrices\n"
+                    }
+                }
+            ],
+            "factual_accuracy_metric/explanation": "All factual information in the AI's response precisely matches the reference. The numerical values for average sale prices are identical, and while the reference states '0.34%' and the AI states '-0.34%', the AI correctly clarifies that this means complete orders are '0.34% lower', which is an accurate and more precise way of presenting the difference, consistent with the reference's magnitude.",
+            "factual_accuracy_metric/score": 5.0,
+            "completeness_metric/explanation": "The AI's answer provides all requested information: the average sale price for complete orders, the average sale price for returned orders, and the percentage difference between them to two decimal places. Although the reference provides the percentage difference as '0.34%' and the AI as '-0.34%', the AI clarifies this by stating 'meaning the average sale price of complete orders is 0.34% lower than that of returned orders', which is a complete and accurate representation of the information.",
+            "completeness_metric/score": 5.0,
+            "trajectory_single_tool_use/score": 1.0
+        }
+    ]
+}
